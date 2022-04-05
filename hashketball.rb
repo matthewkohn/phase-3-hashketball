@@ -1,3 +1,5 @@
+require "pry"
+
 # Write your code below game_hash
 def game_hash
   {
@@ -127,3 +129,81 @@ def game_hash
 end
 
 # Write code here
+# def num_points_scored(player_name)
+#   binding.pry
+#   game_hash.each do |location, team_data|
+#     #are you ABSOLUTELY SURE what 'location' and 'team data' are? use binding.pry to find out!
+#     binding.pry
+#     team_data.each do |attribute, data|
+#       #are you ABSOLUTELY SURE what 'attribute' and 'team data' are? use binding.pry to find out!
+#       binding.pry
+
+#       #what is 'data' at each loop throughout .each block? when will the following line of code work and when will it break?
+#       data.each do |data_item|
+#           puts data_item
+#       end
+#     end
+#   end
+# end
+
+def all_players
+  game_hash[:home][:players] + game_hash[:away][:players]
+end
+# puts all_players
+
+def player_stats(player_name)
+  all_players.find do |player|
+    player[:player_name] == player_name
+  end
+end
+# puts player_stats("Jason Terry")[:shoe]
+
+def num_points_scored(player_name)
+  player = player_stats(player_name)
+  player[:points]
+end
+# puts num_points_scored("Mason Plumlee")
+
+def shoe_size(player_name)
+  player = player_stats(player_name)
+  player[:shoe]
+end
+# puts shoe_size("Reggie Evans")
+
+def find_team(team_name)
+  team_info = game_hash.find do |location, team_data|
+    team_data[:team_name] == team_name
+  end
+  team_info[1]
+end
+# puts find_team("Brooklyn Nets")
+
+def team_colors(team_name)
+  team = find_team(team_name)
+  team[:colors]
+end
+
+def team_names
+  game_hash.map do |location, team_data|
+    team_data[:team_name]
+  end
+end
+
+def player_numbers(team_name)
+  team = find_team(team_name)
+  team[:players].map do |player|
+    player[:number]
+  end
+end
+puts player_numbers("Brooklyn Nets")
+
+
+def big_shoe_player
+  all_players.max_by do |player|
+    player[:shoe]
+  end
+end
+
+def big_shoe_rebounds
+  big_shoe_player[:rebounds]
+end
